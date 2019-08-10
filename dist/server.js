@@ -276,7 +276,9 @@ io.on('connection', function (socket) {
             Users.splice(user.index, 1);
             console.log(user.data.side + " player has left the game!");
         } else console.log("Spectator has left the game!");
-
+        if(Users.length == 0){
+            clearInterval(gameLoopInterval);
+        }
     });
 });
 

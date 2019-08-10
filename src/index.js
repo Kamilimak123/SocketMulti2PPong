@@ -28,7 +28,7 @@ let ball = new Ball(imageBall, ballRadius, gameDims, velocity);
 
 let player = null;
 let inputHandler = null;
-
+let moveButtons = document.getElementsByClassName("movement-button");
 // network logic
 let socket = io();
 
@@ -37,8 +37,24 @@ socket.emit('which player', gameDims, function (msg) {
 
     if (player == "left") {
         inputHandler = new InputHandler(leftPaddle);
+        moveButtons[0].addEventListener("mousedown", mouseDown);
+        moveButtons[0].addEventListener("mouseup", mouseUp);
+        moveButtons[0].addEventListener("touchstart", mouseDown);
+        moveButtons[0].addEventListener("touchend", mouseUp);
+        moveButtons[1].addEventListener("mousedown", mouseDown);
+        moveButtons[1].addEventListener("mouseup", mouseUp);
+        moveButtons[1].addEventListener("touchstart", mouseDown);
+        moveButtons[1].addEventListener("touchend", mouseUp);
     } else if (player == "right") {
         inputHandler = new InputHandler(rightPaddle);
+        moveButtons[2].addEventListener("mousedown", mouseDown);
+        moveButtons[2].addEventListener("mouseup", mouseUp);
+        moveButtons[2].addEventListener("touchstart", mouseDown);
+        moveButtons[2].addEventListener("touchend", mouseUp);
+        moveButtons[3].addEventListener("mousedown", mouseDown);
+        moveButtons[3].addEventListener("mouseup", mouseUp);
+        moveButtons[3].addEventListener("touchstart", mouseDown);
+        moveButtons[3].addEventListener("touchend", mouseUp);
     }
     alert("You are player " + player + "!");
 });
@@ -59,31 +75,31 @@ socket.on('game loop', function (msg) {
     leftPaddle.height = msg.leftP.height;
 
     if (player == "left") {
-        
+
         socket.emit('left paddleState', leftPaddle.speed);
     } else if (player == "right") {
-        
+
         socket.emit('right paddleState', rightPaddle.speed);
     }
 });
 
-socket.on('score', function(msg){
-    if(msg == "left"){
+socket.on('score', function (msg) {
+    if (msg == "left") {
         leftScore.innerHTML = parseInt(leftScore.innerHTML) + 1;
     }
-    if(msg == "right"){
+    if (msg == "right") {
         rightScore.innerHTML = parseInt(rightScore.innerHTML) + 1;
     }
 });
 
-let moveButtons = document.getElementsByClassName("movement-button");
 
-for (let i = 0; i < moveButtons.length; i++) {
-    moveButtons[i].addEventListener("mousedown", mouseDown);
-    moveButtons[i].addEventListener("mouseup", mouseUp);
-    moveButtons[i].addEventListener("touchstart", mouseDown);
-    moveButtons[i].addEventListener("touchend", mouseUp);
-}
+
+// for (let i = 0; i < moveButtons.length; i++) {
+//     moveButtons[i].addEventListener("mousedown", mouseDown);
+//     moveButtons[i].addEventListener("mouseup", mouseUp);
+//     moveButtons[i].addEventListener("touchstart", mouseDown);
+//     moveButtons[i].addEventListener("touchend", mouseUp);
+// }
 
 
 

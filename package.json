@@ -1,0 +1,26 @@
+{
+  "name": "pong",
+  "version": "1.0.0",
+  "description": "simple pong game",
+  "main": "index.html",
+  "scripts": {
+    "start": "node ./dist/server.js",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kamilimak123",
+  "license": "ISC",
+  "devDependencies": {
+    "cssnano": "^4.1.10",
+    "gh-pages": "^2.1.0",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "lodash": "^4.17.15",
+    "socket.io": "^2.2.0"
+  }
+}

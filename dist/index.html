@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Welcome to Pong Game</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<img id="img_ball" style="display: none" src="assets/images/ball.png" />
+
+<body>
+
+
+    <div class="container">
+        <h2 class="item">Pong Game</h2>
+    </div>
+
+    <div class="grid">
+
+        <button id="movement-button1" class="movement-button">Up</button>
+        <button id="movement-button2" class="movement-button">Down</button>
+        <div class="canvasStyle">
+            <span id="leftScore">0</span> <span id="rightScore">0</span>
+            <canvas id="myCanvas" width="800" height="500"></canvas>
+        </div>
+
+        <button id="movement-button3" class="movement-button">Up</button>
+        <button id="movement-button4" class="movement-button">Down</button>
+
+
+
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./bundle.js"></script>
+
+</body>
+
+</html>

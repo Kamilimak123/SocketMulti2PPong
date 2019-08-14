@@ -1,4 +1,4 @@
-# Simple2PPong
+# SocketMulti2PPong
 Simple Pong game for two players
 
 Controls:

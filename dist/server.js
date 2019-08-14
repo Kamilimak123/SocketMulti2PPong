@@ -50,8 +50,8 @@ class Paddle {
 
 let gameDims = null;
 let velocity = {
-    dx: 2,
-    dy: -2
+    dx: 3,
+    dy: -3
 }
 let paddlesSpeed = 5;
 let ballRadius = 10;
@@ -170,10 +170,10 @@ function checkWalls() {
 
 function calcHit(hitter) {
     if (hitter == "left") {
-        ball.velocity.dy = (ball.position.y - leftPaddle.position.y) / ((leftPaddle.height + 2 * ball.radius) / 4) - 2;
+        ball.velocity.dy = (ball.position.y - leftPaddle.position.y) / ((leftPaddle.height + ball.radius) / 4) - 2;
     }
     if (hitter == "right") {
-        ball.velocity.dy = (ball.position.y - rightPaddle.position.y) / ((rightPaddle.height + 2 * ball.radius) / 4) - 2;
+        ball.velocity.dy = (ball.position.y - rightPaddle.position.y) / ((rightPaddle.height + ball.radius) / 4) - 2;
     }
 
     ball.velocity.dx = Math.sqrt(ball.velocityValue - (ball.velocity.dy * ball.velocity.dy));
@@ -185,8 +185,7 @@ function calcHit(hitter) {
     if (hitter == "right") {
         if (ball.velocity.dx > 0) { ball.velocity.dx = -ball.velocity.dx; }
     }
-
-    ball.velocityValue = ball.velocityValue + 2;
+    ball.velocityValue = ball.velocityValue + 3;
 }
 
 function scoreCheck(scorer) {
@@ -196,16 +195,22 @@ function scoreCheck(scorer) {
     ball.velocity.dy = 0;
     ball.velocityValue = ball.startVelocity;
     if (scorer == "left") {
-        //leftScore.innerHTML = parseInt(leftScore.innerHTML) + 1;
         io.emit('score',"left");
         leftPaddle.height = leftPaddle.height - 10;
-        setTimeout(function () { ball.velocity.dx = -2; ball.velocity.dy = 0 }, 2000);
+        setTimeout(function () { ball.velocity.dx = -3; ball.velocity.dy = 0 }, 2000);
     }
     if (scorer == "right") {
-        //rightScore.innerHTML = parseInt(rightScore.innerHTML) + 1;
         io.emit('score',"right");
         rightPaddle.height = rightPaddle.height - 10;
-        setTimeout(function () { ball.velocity.dx = 2; ball.velocity.dy = 0 }, 2000);
+        setTimeout(function () { ball.velocity.dx = 3; ball.velocity.dy = 0 }, 2000);
+    }
+    if(leftPaddle.height == 0){
+        io.emit('game end',"left");
+        clearInterval(gameLoopInterval);
+    }
+    if(rightPaddle.height == 0){
+        io.emit('game end',"right");
+        clearInterval(gameLoopInterval);
     }
 }
 
@@ -229,6 +234,7 @@ function gameLoop() {
     }
 
     io.emit('game loop', gameState);
+    
 }
 
 let gameLoopInterval = null;

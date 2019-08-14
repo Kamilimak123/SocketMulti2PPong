@@ -207,13 +207,15 @@ function scoreCheck(scorer) {
     if(leftPaddle.height == 0){
         io.emit('game end',"left");
         clearInterval(gameLoopInterval);
+        gamePlaying = false;
     }
     if(rightPaddle.height == 0){
         io.emit('game end',"right");
         clearInterval(gameLoopInterval);
+        gamePlaying = false;
     }
 }
-
+let gamePlaying = false;
 let imageBall = null;
 function gameStart() {
     console.log("game starts!")
@@ -221,6 +223,7 @@ function gameStart() {
     leftPaddle = new Paddle(10, 100, gameDims, paddlesSpeed, "left");
     rightPaddle = new Paddle(10, 100, gameDims, paddlesSpeed, "right");
     gameLoopInterval = setInterval(gameLoop, 16);
+    gamePlaying = true;
 }
 
 function gameLoop() {
@@ -262,7 +265,10 @@ io.on('connection', function (socket) {
             fn(user.side);
         }
         if (Users.length == 2) {
-            setTimeout(gameStart, 10000);
+            if(gamePlaying == false){
+                setTimeout(gameStart, 10000);
+            }
+            
         }
     });
 
@@ -284,6 +290,7 @@ io.on('connection', function (socket) {
         } else console.log("Spectator has left the game!");
         if(Users.length == 0){
             clearInterval(gameLoopInterval);
+            gamePlaying = false;
         }
     });
 });
